@@ -25,4 +25,4 @@ const connectToDatabase = async () =>{
 }
 
 export default connectToDatabase;
-// mongodb://localhost:27017/moospire
+// mongodb://localhost:27017/

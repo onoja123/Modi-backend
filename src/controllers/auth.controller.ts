@@ -104,18 +104,18 @@ export const signUp = catchAsync(async (req: Request, res: Response, next: NextF
 
     });
 
-    // Compose verification email message
-    const message = `
-      Hi ${fullname}, Thank you for signing up for moospire! To get started, please confirm your email address by clicking the link below:`;
-
-    console.log('Recipient email:', newUser.email);
-
     // Send verification email
-    await sendEmail({
-      to: newUser.email,
-      subject: 'Welcome to Dishpatch🚀',
-      message,
-    });
+
+    await sendEmail(
+      {
+        to: newUser.email,
+        subject: 'Welcome 🚀',
+      },
+      'welcome',
+      {
+        fullname: newUser.fullname,
+      }
+    ); 
 
     // If the email was sent successfully, proceed to user creation
     await newUser.save({ validateBeforeSave: false });
@@ -275,11 +275,17 @@ export const resendVerification = catchAsync(async(req: Request, res: Response, 
       Here's a new code to verify your account.${otp}`;
 
     try {
-      await sendEmail({
-        to: user.email,
-        subject: 'Verification Link 🚀!',
-        message,
-      });
+
+      await sendEmail(
+        {
+          to: user.email,
+          subject: 'Verification Link 🚀!',
+        },
+        'resend-otp',
+        {
+          fullname: user.fullname,
+        }
+      ); 
 
       ResponseHelper.sendSuccessResponse(res, {
         statusCode: ResponseHelper.OK, 
@@ -333,19 +339,20 @@ export const forgotPassword = catchAsync(async(req:Request, res:Response, next: 
 
     console.log(otp);
 
-    const message = `
-      Hi ${user.fullname}
-      We heard you are having problems with your password.
-      here is your otp vefication code ${otp}
-      Otp expires in 10 minutes.`;
 
     try {
-      await sendEmail({
-        to: user.email,
-        subject: 'Forgot password',
-        message,
-      });
 
+
+      await sendEmail(
+        {
+          to: user.email,
+          subject: 'Forgot password 🚀!',
+        },
+        'fforgor-password',
+        {
+          fullname: user.fullname,
+        }
+      );  
       ResponseHelper.sendSuccessResponse(res, {
         statusCode: ResponseHelper.OK, 
         message: 'Email sent sucessfully 🚀!',
@@ -530,7 +537,7 @@ export const getGoogleAuthUrl = catchAsync(async (req: Request, res: Response, n
   ResponseHelper.sendSuccessResponse(res, {
     data: { authorizationUrl }
   })
-  // res.redirect(authorizationUrl);
+
 })
 
 export const logOut = catchAsync(async(req: Request, res: Response, next: NextFunction) => {

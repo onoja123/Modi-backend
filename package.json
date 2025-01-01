@@ -22,7 +22,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.5",
     "nodemailer": "^6.9.14",
-    "otp-generator": "^4.0.1"
+    "otp-generator": "^4.0.1",
+    "rimraf": "^6.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

@@ -7,7 +7,9 @@ import {
     forgotPassword,
     resetPassword,
     logOut,
-    updatePassword
+    updatePassword,
+    getGoogleAuthUrl,
+    googleLoginCallback
 
 } from '../controllers/auth.controller';
 import { protect } from '../controllers/auth.controller';
@@ -27,6 +29,10 @@ router.post('/forgotpassword', forgotPassword)
 router.post('/resetpassword', resetPassword)
 
 router.post('/logout', logOut)
+
+router.get('/google/login', getGoogleAuthUrl);
+router.get('/google/callback', googleLoginCallback);
+
 
 router.use(protect)
 router.post('/updatepassword', updatePassword)
